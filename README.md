@@ -7,10 +7,10 @@ Hardware:
 - CPU: Intel(R) Atom(TM) x5-Z8300  CPU @ 1.44GHz (CherryTrail)
 - RAM: 2 GB DIMM DDR3 Synchronous 1066 MHz (0,9 ns)
 - Video: VGA compatible controller: Intel Corporation Atom/Celeron/Pentium Processor x5-E8000/J3xxx/N3xxx Series PCI Configuration Registers (rev 22)
-- Audio: Ensoniq es
+- Audio: Ensoniq es8316 (Intel SST)
 - WiFi: AMPAK AP6212 - Broadcom 43438a0
 - Bluetooth: AMPAK AP6212 - ?
-- Touchscreen: Silead gst1680
+- Touchscreen: Silead gsl1680
 - Touchpad: 1017:1006 Speedy Industrial Supplies, Pte., Ltd
 - Teclado: 1017:1006 Speedy Industrial Supplies, Pte., Ltd
 - Pantalla: Resolución máxima 800x1280
