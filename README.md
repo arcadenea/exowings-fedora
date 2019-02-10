@@ -1,5 +1,5 @@
 # exowings-debian
-Repositorio de archivos varios e instrucciones para hacer funcionar Debian GNU/Linux en la notebook Exo Wings.
+Repositorio de archivos varios e instrucciones para hacer funcionar Fedora GNU/Linux en la notebook Exo Wings K2200.
 
 
 Hardware:
