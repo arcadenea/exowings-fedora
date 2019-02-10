@@ -1,4 +1,4 @@
-# exowings-debian
+# exowings-fedora
 Repositorio de archivos varios e instrucciones para hacer funcionar Fedora GNU/Linux en la notebook Exo Wings K2200.
 
 
