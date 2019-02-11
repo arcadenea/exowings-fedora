@@ -70,14 +70,13 @@ sudo touch /etc/udev/rules.d/98-touchscreen-cal.rules
 2) Editarlo y copiar el texto incluido:
 sudo vi /etc/udev/rules.d/98-touchscreen-cal.rules
 
-ATTRS{name}=="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="3.5687 0.0 -2.5710 0.0 2.3529 0.0132"
+ATTRS{name}=="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 -3.7 1 -2.4 0 1 0 0 1"
 
 
 3) Recargar reglar de udev:
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 
-NOTA: Todavía no logro obtener la matriz de rotación correcta.
 
 Audio
 =====
