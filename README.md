@@ -49,11 +49,28 @@ Touchpad
 ========
 Funciona correctamente.
 
+
 Bluetooth
 =========
 Funciona correctamente, copiar el siguiente archivo:
 
 sudo cp bcm43438a0.hcd /lib/firmware/brcm/BCM4343A0.hcd
+
+
+Pantalla
+========
+El control de brillo funciona correctamente, aunque tiene un problema de parpadeo al volver luego de estar suspendido.    
+
+La consola aparece rotada, para ubicarla correctamente es necesario setear un parámetro en GRUB. Para ello, primero verificar el kernel que está booteando con el siguiente comando:
+
+sudo grubby --info=ALL
+
+Luego buscar una linea que diga "index=0", la siguiente línea indicará el kernel que bootea. Por ejemplo "kernel=/boot/vmlinuz-4.20.6-200.fc29.x86_64"
+
+Luego ejecutar el siguiente comando, cambiando "/boot/vmlinuz-4.20.6-200.fc29.x86_64" por el kernel que se haya listado arriba:
+
+
+sudo grubby --args=fbcon=rotate:3 --update-kernel /boot/vmlinuz-4.20.6-200.fc29.x86_64
 
 
 Touchscreen
@@ -87,6 +104,7 @@ sudo cp HiFi /usr/share/alsa/ucm/bytcht-es8316/
 sudo cp bytcht-es8316.conf /usr/share/alsa/ucm/bytcht-es8316/
 
 Reiniciar y debería funcionar. El switcheo de parlantes y auriculares no funciona correctamente, es un tema de un control GPIO.
+
 
 Acelerómetro
 ============
