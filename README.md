@@ -32,13 +32,23 @@ Instalación
 =========== 
 Fedora 29: Para instalar Fedora, simplemente bajen la imagen live que incluye el instalador. En mi caso instalé la versión X64. Si quieren instalar la versión de 32 bits, va a ser necesario mezclar ambos sistemas, ya que el live de fedora de 32 bits no incluye un bootloader UEFI.
 
+Antes de comenzar debes tener instalada la utilidad `make`.
+
+En Fedora:
+
+	sudo dnf install make
+
+En Debian y derivados (e.g. Huayra, Ubuntu):
+
+	sudo apt-get install make
+
+Para instalar el firmware y la configuración:
+
+	sudo make install
 
 WiFi
 ====
-La notebook integra un adaptador SDIO combinado de Wifi+Bluetooth, un AMPAK AP6212. Fedora viene con el módulo preinstalado en el kernel, solamente hay que copiar el firmware que incluyo en la carpeta "Firmware":
-
-sudo cp nvram.txt /lib/firmware/brcm/brcmfmac43430a0-sdio.txt
-
+La notebook integra un adaptador SDIO combinado de Wifi+Bluetooth, un AMPAK AP6212. El driver está incluído en el kernel mainline.
 
 Teclado
 =======
@@ -52,79 +62,35 @@ Funciona correctamente.
 
 Bluetooth
 =========
-Funciona correctamente, copiar el siguiente archivo:
+Funciona correctamente.
 
-sudo cp bcm43438a0.hcd /lib/firmware/brcm/BCM4343A0.hcd
 
 
 Pantalla
 ========
-El control de brillo funciona correctamente, aunque tiene un problema de parpadeo al volver luego de estar suspendido.    
+El control de brillo funciona correctamente, aunque tiene un problema de parpadeo al volver luego de estar suspendido.
 
 La consola aparece rotada, para ubicarla correctamente es necesario setear un parámetro en GRUB. Para ello, primero verificar el kernel que está booteando con el siguiente comando:
 
-sudo grubby --info=ALL
+	sudo grubby --info=ALL
 
 Luego buscar una linea que diga "index=0", la siguiente línea indicará el kernel que bootea. Por ejemplo "kernel=/boot/vmlinuz-4.20.6-200.fc29.x86_64"
 
 Luego ejecutar el siguiente comando, cambiando "/boot/vmlinuz-4.20.6-200.fc29.x86_64" por el kernel que se haya listado arriba:
 
 
-sudo grubby --args=fbcon=rotate:3 --update-kernel /boot/vmlinuz-4.20.6-200.fc29.x86_64
+	sudo grubby --args=fbcon=rotate:3 --update-kernel /boot/vmlinuz-4.20.6-200.fc29.x86_64
 
 
 Touchscreen
 ===========
-Funciona, es necesario copiar el firmware que incluyo:
-
-sudo cp firmware_00.fw /lib/firmware/silead/mssl1680.fw
-
-Luego configurar la matriz con los siguientes pasos:
-
-1) Crear un archivo de configuración:
-sudo touch /etc/udev/rules.d/98-touchscreen-cal.rules
-
-2) Editarlo y copiar el texto incluido:
-sudo vi /etc/udev/rules.d/98-touchscreen-cal.rules
-
-ATTRS{name}=="silead_ts", ENV{LIBINPUT_CALIBRATION_MATRIX}="0 -3.7 1 -2.4 0 1 0 0 1"
-
-
-3) Recargar reglar de udev:
-sudo udevadm control --reload-rules
-sudo udevadm trigger
-
+Funciona.
 
 Audio
 =====
-Funciona, es necesario copiar los archivos de configuración de ALSA que incluyo:
-
-sudo mkdir /usr/share/alsa/ucm/bytcht-es8316
-sudo cp HiFi /usr/share/alsa/ucm/bytcht-es8316/
-sudo cp bytcht-es8316.conf /usr/share/alsa/ucm/bytcht-es8316/
-
-Reiniciar y debería funcionar. El switcheo de parlantes y auriculares no funciona correctamente, es un tema de un control GPIO.
+Funciona. El cambio entre parlantes y auriculares no funciona correctamente, es un tema de un control GPIO.
 
 
 Acelerómetro
 ============
-La pantalla viene por defecto configurada en modo vertical, para rotarla permanentemente es necesario ajustar el acelerómetro. Entonces ejecutar lo siguiente:
-
-
-1) Crear un archivo en "/usr/lib/udev/hwdb.d/" llamado "61-sensor-local.hwdb":
-
-sudo touch /usr/lib/udev/hwdb.d/61-sensor-local.hwdb
-
-
-2) Abrir el archivo y copiar el siguiente texto dentro del archivo:
-sudo vi /usr/lib/udev/hwdb.d/61-sensor-local.hwdb
-
-sensor:modalias:acpi:BOSC0200*:dmi:*:svnInsyde*:pnCherryTrail:*
-  ACCEL_MOUNT_MATRIX=-1, 0, 0; 0, 1, 0; 0, 0, 1
-
-
-3) Ejecutar los siguientes comandos:
-
-sudo systemd-hwdb update
-sudo udevadm trigger
-
+La pantalla viene por defecto configurada en modo vertical, para rotarla permanentemente el apaño implementado es ajustar el acelerómetro.
